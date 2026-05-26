@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>島宇手作 🐢 命定手鍊指南</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: {
+                            50: '#F4F7F5',
+                            100: '#E6ECE9',
+                            200: '#CCDCD3',
+                            500: '#8FA89B',
+                            800: '#3D5246',
+                            900: '#2C3E35',
+                        },
+                        oatmeal: {
+                            50: '#FAF8F5',
+                            100: '#F4F1EA',
+                            200: '#E8E3D7',
+                            800: '#5C5446',
+                        },
+                        terracotta: {
+                            100: '#F7ECE9',
+                            500: '#D9A08F',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #FAF8F5;
+        }
+    </style>
+</head>
+<body class="text-sage-900 min-h-screen flex flex-col justify-between">
+
+    <!-- Toast -->
+    <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 bg-sage-900 text-oatmeal-100 px-6 py-3 rounded-full shadow-lg z-50 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-2 text-sm">
+        <span id="toast-text">已複製代碼！</span>
+    </div>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-6 space-y-8">
+        
+        <!-- Header Section -->
+        <div class="text-center max-w-xl mx-auto space-y-2">
+            <span class="text-xs bg-sage-500 text-white px-3 py-1 rounded-full font-light tracking-widest">慢活長老系列水晶手鍊</span>
+            <h2 class="text-2xl font-bold tracking-widest text-sage-900">聽從靈魂直覺，尋找與你共振的守護頻率</h2>
+            <p class="text-xs text-sage-500 leading-relaxed font-light">
+                由島主沐曦在深夜靜心中為每串水晶注入調頻能量，出貨前皆享有「免費消磁與過爐加持祝福」服務。
+            </p>
+        </div>
+
+        <!-- Quick filter diagnostic -->
+        <div class="bg-oatmeal-100 p-5 rounded-3xl border border-sage-200/40 space-y-4 max-w-xl mx-auto">
+            <h3 class="text-sm font-bold text-sage-900 flex items-center space-x-1">
+                <span>🔮</span>
+                <span>直覺能量調頻診斷：哪一款最契合你？</span>
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <button onclick="recommendBracelet('阿寶')" class="bg-white p-3 rounded-2xl text-xs hover:border-sage-500 border border-transparent shadow-sm transition-all text-left space-y-1">
+                    <p class="font-bold text-sage-800">🟩 深夜焦慮 / 腦袋停不下來</p>
+                    <p class="text-[10px] text-sage-500 font-light">推薦：阿寶款 ➔ 心輪修復</p>
+                </button>
+                <button onclick="recommendBracelet('波卡')" class="bg-white p-3 rounded-2xl text-xs hover:border-sage-500 border border-transparent shadow-sm transition-all text-left space-y-1">
+                    <p class="font-bold text-sage-800">🟨 職場受挫 / 缺乏安全自信</p>
+                    <p class="text-[10px] text-sage-500 font-light">推薦：波卡款 ➔ 能量重建</p>
+                </button>
+                <button onclick="recommendBracelet('點點')" class="bg-white p-3 rounded-2xl text-xs hover:border-sage-500 border border-transparent shadow-sm transition-all text-left space-y-1">
+                    <p class="font-bold text-sage-800">🟥 人生卡關 / 面臨重大決定</p>
+                    <p class="text-[10px] text-sage-500 font-light">推薦：點點款 ➔ 深度覺察</p>
+                </button>
+            </div>
+            <!-- Alert modal showing result -->
+            <div id="recommendation-result" class="hidden bg-white/70 rounded-2xl p-4 text-xs text-sage-800 transition-all border border-sage-100 flex items-start space-x-2.5">
+                <span class="text-xl">🐢</span>
+                <div class="space-y-1">
+                    <p class="font-bold text-sage-900" id="rec-title">推薦您的守護物</p>
+                    <p class="font-light text-[11px] leading-relaxed" id="rec-text">慢慢建議您...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Card 1 -->
+            <div id="card-abao" class="bg-white border border-sage-200/50 rounded-2xl p-5 space-y-4 shadow-sm flex flex-col justify-between transition-all">
+                <div class="space-y-3">
+                    <span class="text-[10px] bg-green-100 text-green-800 px-2 py-0.5 rounded font-medium">體驗破冰級 🟢</span>
+                    <h3 class="font-bold text-sage-900 text-base">【阿寶的綠意慢活】能量守護手鍊</h3>
+                    <p class="text-xs text-sage-500 leading-normal font-light">
+                        <strong>主打心輪與頂輪修復</strong>，專為日常節奏過快、容易精神緊繃、深夜內耗失眠的島民設計。綠幽靈穩固正財，葡萄石舒緩壓力，白水晶消除負能。
+                    </p>
+                    <div class="text-[11px] text-sage-700 bg-oatmeal-50 p-3 rounded-xl border border-sage-100 space-y-1 font-light">
+                        <p>💎 水晶：綠幽靈 (10mm)、葡萄石、白水晶、復古黃銅</p>
+                        <p>📿 顆數：23 顆 (適合手圍 15cm)</p>
+                        <p>👋 配戴：左手 (吸納療癒磁場)</p>
+                        <p>☀️ 淨化：清水沖洗 3-5 分鐘，或在清晨溫和陽光下曝曬 1 小時 (<strong>阿寶導師曬太陽法</strong>)。</p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-sage-50 flex items-center justify-between mt-4">
+                    <span class="text-sm font-extrabold text-sage-900">NT$ 880</span>
+                    <button onclick="orderBracelet('阿寶的綠意慢活手鍊', 880)" class="px-4 py-1.5 bg-sage-900 hover:bg-sage-800 text-oatmeal-50 rounded-full text-xs font-medium transition-all shadow-sm">
+                        預約訂製
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div id="card-poca" class="bg-white border border-sage-200/50 rounded-2xl p-5 space-y-4 shadow-sm flex flex-col justify-between transition-all">
+                <div class="space-y-3">
+                    <span class="text-[10px] bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded font-medium">核心主力款 🟡</span>
+                    <h3 class="font-bold text-sage-900 text-base">【波卡的破曉曙光】自信重建手鍊</h3>
+                    <p class="text-xs text-sage-500 leading-normal font-light">
+                        <strong>主打海底輪與太陽神經叢激活</strong>。黑曜石形成強大防護罩，阻擋小人與環境煞氣；黃水晶與金髮晶注入自信心與財氣，帶你跨越絕望低谷。
+                    </p>
+                    <div class="text-[11px] text-sage-700 bg-oatmeal-50 p-3 rounded-xl border border-sage-100 space-y-1 font-light">
+                        <p>💎 水晶：金髮晶 (10mm)、黃水晶、黑曜石、925純銀幾何隔珠</p>
+                        <p>📿 顆數：21 顆 (黃水晶 10、黑曜石 8、金髮晶 1)</p>
+                        <p>👋 配戴：右手 (黑曜石「左進右出」利於排除負能與壓力)</p>
+                        <p>🔥 淨化：聖木或鼠尾草煙燻 1-2 分鐘。避開曝曬以防褪色。</p>
+                        <p class="text-terracotta-500 font-medium">🎁 超值套裝：免費贈送【簡約單題生命靈數解析】</p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-sage-50 flex items-center justify-between mt-4">
+                    <span class="text-sm font-extrabold text-sage-900">NT$ 1,580</span>
+                    <button onclick="orderBracelet('波卡的破曉曙光手鍊', 1580)" class="px-4 py-1.5 bg-sage-900 hover:bg-sage-800 text-oatmeal-50 rounded-full text-xs font-medium transition-all shadow-sm">
+                        預約訂製
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div id="card-diandian" class="bg-white border border-sage-200/50 rounded-2xl p-5 space-y-4 shadow-sm flex flex-col justify-between transition-all">
+                <div class="space-y-3">
+                    <span class="text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-medium">高端頂級款 🔴</span>
+                    <h3 class="font-bold text-sage-900 text-base">【點點的靈魂星宇】深層覺察手鍊</h3>
+                    <p class="text-xs text-sage-500 leading-normal font-light">
+                        <strong>喉輪、三眼輪與全脈輪深度覺醒</strong>。超七水晶共振放大整體能量磁場；拉長石與藍磷灰相輔相成，療癒深層精神焦慮、喚醒內在智慧。
+                    </p>
+                    <div class="text-[11px] text-sage-700 bg-oatmeal-50 p-3 rounded-xl border border-sage-100 space-y-1 font-light">
+                        <p>💎 水晶：頂級超七 (12mm 大主珠)、拉長石、藍磷灰、14K包金奢華隔飾</p>
+                        <p>📿 顆數：24 顆 (拉長石 12、藍磷灰 9、超七 1、金飾 2)</p>
+                        <p>👋 配戴：左手 (全面吸納宇宙神聖能量)</p>
+                        <p>🔮 淨化：禁止烈日曬！置於大尺寸白水晶簇上靜置 24 小時消磁最佳。</p>
+                        <p class="text-terracotta-500 font-medium">👑 尊榮套餐：包含【一對一生命靈數 30-40分深度大解析】</p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-sage-50 flex items-center justify-between mt-4">
+                    <span class="text-sm font-extrabold text-sage-900">NT$ 3,280</span>
+                    <button onclick="orderBracelet('點點的靈魂星宇手鍊', 3280)" class="px-4 py-1.5 bg-sage-900 hover:bg-sage-800 text-oatmeal-50 rounded-full text-xs font-medium transition-all shadow-sm">
+                        預約訂製
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout / Copy ordering code -->
+        <div id="ordering-section" class="hidden bg-white border border-sage-200/50 rounded-3xl p-6 max-w-xl mx-auto space-y-4 shadow-sm transition-all duration-300">
+            <div class="text-center pb-2 border-b border-sage-100">
+                <span class="text-xl">🎫</span>
+                <h4 class="font-bold text-sm text-sage-900">您已選購：<span id="selected-name" class="text-terracotta-500">?</span></h4>
+                <p class="text-[10px] text-sage-500 font-light">請在下方輸入生日與姓名，生成代碼私訊沐曦老師進行專屬能量對齊與過爐加持</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3 text-xs">
+                <div>
+                    <label class="block text-[10px] text-sage-500 font-medium mb-1">西元生日 (1998/10/24)</label>
+                    <input type="text" id="order-birthday" class="w-full rounded-xl border-sage-200 text-xs p-2 focus:ring-sage-500" placeholder="年/月/日">
+                </div>
+                <div>
+                    <label class="block text-[10px] text-sage-500 font-medium mb-1">您的 LINE 暱稱</label>
+                    <input type="text" id="order-linename" class="w-full rounded-xl border-sage-200 text-xs p-2 focus:ring-sage-500" placeholder="方便對齊訂單">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <textarea id="order-copy-area" readonly class="w-full h-24 rounded-xl border-sage-100 text-[10px] p-3 bg-oatmeal-50/50 text-sage-700 font-mono leading-relaxed resize-none"></textarea>
+                <button onclick="copyOrderCode()" class="w-full py-2 bg-sage-900 hover:bg-sage-800 text-oatmeal-50 rounded-full font-medium tracking-widest text-xs transition-all shadow flex items-center justify-center space-x-1">
+                    <span>📋 一鍵複製訂製代碼</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="border-t border-sage-100 py-4 text-center text-[10px] text-sage-400 bg-oatmeal-50">
+        <p>© 2026 島宇手作 Island Space. 大人的世界走累了嗎？慢慢來，不焦慮。🐢</p>
+    </footer>
+
+    <script>
+        let currentPrice = 0;
+        let currentItem = "";
+
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').innerText = text;
+            toast.style.transform = 'translateY(0px) translateX(-50%)';
+            toast.style.opacity = '1';
+            setTimeout(() => {
+                toast.style.transform = 'translateY(-80px) translateX(-50%)';
+                toast.style.opacity = '0';
+            }, 2500);
+        }
+
+        function recommendBracelet(elder) {
+            const card = document.getElementById('recommendation-result');
+            const title = document.getElementById('rec-title');
+            const text = document.getElementById('rec-text');
+            
+            card.classList.remove('hidden');
+            
+            if (elder === '阿寶') {
+                title.innerText = "安心長老 阿寶 (斑龜) 的慢活能量推薦";
+                text.innerText = "您最近腦袋是不是塞了太多思緒？阿寶長老推薦您綠色調的【阿寶的綠意慢活】能量守護手鍊，用綠幽靈與葡萄石的心輪能量，帶你慢慢呼吸，沉澱下緊繃的日常。";
+                highlightCard('card-abao');
+            } else if (elder === '波卡') {
+                title.innerText = "光芒使者 波卡 (赫曼陸龜) 的重生力量推薦";
+                text.innerText = "在職場或人際上，你是不是開始懷疑自己了？波卡推薦您黃黑配色【波卡的破曉曙光】自信重建手鍊。黑曜石擋煞、黃水晶招財自信，直接幫您做次狀態重整！";
+                highlightCard('card-poca');
+            } else {
+                title.innerText = "靈魂翻譯官 點點 (櫻桃紅腿陸龜) 的星宇直覺推薦";
+                text.innerText = "您正面臨人生的重大轉折與迷茫嗎？點點建議您直接對齊高能量的【點點的靈魂星宇】高階深層覺察手鍊，超七能量能共振放大靈魂磁場，引領您做出對的決策。";
+                highlightCard('card-diandian');
+            }
+        }
+
+        function highlightCard(id) {
+            document.querySelectorAll('#card-abao, #card-poca, #card-diandian').forEach(c => {
+                c.classList.remove('border-sage-500', 'ring-1', 'ring-sage-500');
+            });
+            const target = document.getElementById(id);
+            target.classList.add('border-sage-500', 'ring-1', 'ring-sage-500');
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function orderBracelet(name, price) {
+            currentItem = name;
+            currentPrice = price;
+
+            document.getElementById('selected-name').innerText = `${name} (NT$ ${price})`;
+            document.getElementById('ordering-section').classList.remove('hidden');
+            document.getElementById('ordering-section').scrollIntoView({ behavior: 'smooth' });
+
+            document.getElementById('order-birthday').addEventListener('input', updateOrderText);
+            document.getElementById('order-linename').addEventListener('input', updateOrderText);
+            updateOrderText();
+        }
+
+        function updateOrderText() {
+            const bday = document.getElementById('order-birthday').value.trim() || "【請輸入生日】";
+            const name = document.getElementById('order-linename').value.trim() || "【請輸入LINE暱稱】";
+            
+            const manifest = `【島宇手作 🐢 慢活手鍊客製訂購單】
+-----------------------------------------
+訂購項目：${currentItem} (價格: NT$ ${currentPrice})
+島民暱稱：${name}
+西元生日：${bday}
+-----------------------------------------
+💡 沐曦島主，我已挑選好與我共鳴的守護手鍊！想請你幫我對齊生命靈數並進行深夜持咒與過爐加持祝福！`;
+
+            document.getElementById('order-copy-area').value = manifest;
+        }
+
+        function copyOrderCode() {
+            const bday = document.getElementById('order-birthday').value.trim();
+            if (!bday) {
+                showToast("請先輸入您的出生年月日唷！");
+                document.getElementById('order-birthday').focus();
+                return;
+            }
+
+            const area = document.getElementById('order-copy-area');
+            area.select();
+            area.setSelectionRange(0, 99999);
+
+            try {
+                const success = document.execCommand('copy');
+                if (success) {
+                    showToast("客製訂購代碼已複製！請回 LINE 直接貼上發送 💚");
+                } else {
+                    showToast("複製失敗，請手動長按選取複製。");
+                }
+            } catch (err) {
+                showToast("瀏覽器不支援，請手動複製。");
+            }
+        }
+    </script>
+</body>
+</html>
